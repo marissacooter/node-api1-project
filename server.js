@@ -44,6 +44,7 @@ server.get("/api/users", (req, res) => {
     }
 })
 
+// GET :ID REQUEST
 server.get("/users/:id", (req, res) => {
     const user = db.getUserById(req.params.id)
 
@@ -51,9 +52,15 @@ server.get("/users/:id", (req, res) => {
         res.json(user)
     } else {
         res.status(404),json({
-            message: "User not found",
+            message: "The user with the specified ID does not exist.",
         })
     }
+    // if (!user) {
+    //     return res.status(500).json({
+    //         errorMessage: "The user information could not be retrieved."
+    //     })
+    // }
+    // res.send("working")
 })
 
 server.listen(8000, () => {
