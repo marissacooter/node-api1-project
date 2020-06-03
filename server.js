@@ -4,6 +4,8 @@ const db = require("./database.js")
 
 const server = express()
 
+server.use(express.json())
+
 const shortid = require("shortid")
 
 server.use(express.json())
@@ -45,22 +47,22 @@ server.get("/api/users", (req, res) => {
 })
 
 // GET :ID REQUEST
-server.get("/users/:id", (req, res) => {
-    const user = db.getUserById(req.params.id)
-
+server.get("/api/users/:id", (req, res) => {
+    const user = db.getUserById(1)
+    
     if (user) {
-        res.json(user)
-    } else {
-        res.status(404),json({
-            message: "The user with the specified ID does not exist.",
-        })
-    }
-    // if (!user) {
-    //     return res.status(500).json({
-    //         errorMessage: "The user information could not be retrieved."
+        res.send(user)
+    } 
+    // elseif (!user) {
+    //     res.status(404).json({
+    //         message: "The user with the specified ID does not exist"
+    //     })
+    // } else {
+    //     res.status(500).json({
+    //         message: "The user information could not be retrieved"
     //     })
     // }
-    // res.send("working")
+
 })
 
 server.listen(8000, () => {

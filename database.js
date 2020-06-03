@@ -1,5 +1,6 @@
 let users = [
-	{ id: "1", name: "Jane Doe", bio: "Not Tarzan's wife, another Jane"},
+    { id: "1", name: "Jane Doe", bio: "Not Tarzan's wife, another Jane"},
+    { id: "2", name: "John Doe", bio: "blah blah blah"}
 ]
 
 function getUsers() {
@@ -7,7 +8,7 @@ function getUsers() {
 }
 
 function getUserById(id) {
-	return users.find(u => u.id === id)
+    return users[id - 1]
 }
 
 function createUser(data) {
