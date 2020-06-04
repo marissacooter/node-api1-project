@@ -53,16 +53,61 @@ server.get("/api/users/:id", (req, res) => {
     if (user) {
         res.send(user)
     } 
-    // elseif (!user) {
-    //     res.status(404).json({
-    //         message: "The user with the specified ID does not exist"
-    //     })
-    // } else {
-    //     res.status(500).json({
-    //         message: "The user information could not be retrieved"
-    //     })
-    // }
+    elseif (!user) {
+        res.status(404).json({
+            message: "The user with the specified ID does not exist"
+        })
+    } else {
+        res.status(500).json({
+            message: "The user information could not be retrieved"
+        })
+    }
 
+})
+
+// DELETE REQUEST
+server.delete("/api/users/:id", (req, res) => {
+    const user = db.getUserById(req.params.id)
+
+    if (user) {
+        db.deleteUser(user.id)
+        res.status(204).end()
+    } elseif (!user) {
+        res.status(404).json({
+            message: "The user with the specified ID does not exist"
+        })
+    } else {
+        res.status(500).json({
+            message: "The user could not be removed"
+        })
+    }
+})
+
+// PUT REQUEST
+server.put("/api/users/:id", (req, res) => {
+    const updatedUser = db.getUserById(req.params.id)
+
+    if(user) {
+        db.updateUser(user.id, {
+            name: req.body.name || user.name
+        })
+    
+        res.status(201).json(updatedUser)
+    } else {
+        res.status(404).json({
+            message: "The user with the specified ID does not exist."
+        })
+    }
+
+    if(!req.body.name || !req.body.bio) {
+        return res.status(400).json({
+            message: "Please provide name and bio for the user."
+        })
+    } else (!updatedUser) {
+        return res.status(500).json({
+            message: "The user information could not be modified."
+        })
+    }
 })
 
 server.listen(8000, () => {
