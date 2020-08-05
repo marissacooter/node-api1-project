@@ -15,6 +15,19 @@ server.get("/users", (req, res) => {
     res.json(users)
 })
 
+server.get("/users/:id", (req, res) => {
+    const id = req.params.id
+    const user = db.getUserById(id)
+
+    if (user) {
+        res.status(200).json(user)
+    } else {
+        res.status(404).json({
+            message: "Error, User not found"
+        })
+    }
+})
+
 server.listen(8080, () => {
     console.log("[ SERVER RUNNING ON PORT 8080 ... ]")
 })
