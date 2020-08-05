@@ -36,6 +36,20 @@ server.post("/users", (req, res) => {
     res.status(201).json(newUser)
 })
 
+server.delete("/users/:id", (req, res) => {
+    const user = db.getUserById(req.params.id)
+
+    if (user) {
+        db.deleteUser(req.params.id)
+
+        res.status(204).end()
+    } else {
+        res.status(404).json({ 
+            message: "Error, User not found"
+        })
+    }
+})
+
 server.listen(8080, () => {
     console.log("[ SERVER RUNNING ON PORT 8080 ... ]")
 })
