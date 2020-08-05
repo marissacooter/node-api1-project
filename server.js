@@ -45,9 +45,20 @@ server.delete("/users/:id", (req, res) => {
         res.status(204).end()
     } else {
         res.status(404).json({ 
-            message: "Error, User not found"
+            message: "Error, User not found",
         })
     }
+})
+
+server.put("/users/:id", (req, res) => {
+    const id = req.params.id
+    const user = db.getUserById(id)
+
+    const updatedUser = db.updateUser({
+        name: req.body.name
+    })
+
+    res.status(201).json(updatedUser)
 })
 
 server.listen(8080, () => {
