@@ -42,7 +42,7 @@ server.delete("/users/:id", (req, res) => {
     if (user) {
         db.deleteUser(req.params.id)
 
-        res.status(204).end()
+        res.status(200).json("success!")
     } else {
         res.status(404).json({ 
             message: "Error, User not found",
